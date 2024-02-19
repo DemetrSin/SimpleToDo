@@ -1,0 +1,22 @@
+# PyCharm #
+.idea/
+
+# Compiled Python files #
+*.pyc
+
+# Compiled Python files #
+*.pyc
+*.pyo
+
+# Logs and databases #
+*.log
+*.sqlite3
+
+# Environment variables #
+.env
+
+# macOS / OS X #
+.DS_Store
+
+# Windows #
+Thumbs.db
