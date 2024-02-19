@@ -1,0 +1,26 @@
+{% extends 'users/base.html' %}
+
+{% block title %}Todo List Detail{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-6 offset-md-3">
+    <h2 class="mb-4">{{ todo_list.title }}</h2>
+    <a href="{% url 'create_todo_item' todo_list_id=todo_list.id %}" class="btn btn-primary">Add Task</a>
+    <hr>
+    <ul class="list-group">
+      {% for todo_item in todo_list.todoitem_set.all %}
+        <li class="list-group-item">
+          <h5>{{ todo_item.title }}</h5>
+          <p>{{ todo_item.description }}</p>
+          <p>Priority: {{ todo_item.priority }}</p>
+          <p>Status: {{ todo_item.status }}</p>
+          <p>Due Date: {{ todo_item.due_date }}</p>
+        </li>
+      {% empty %}
+        <li class="list-group-item">No tasks found.</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock %}

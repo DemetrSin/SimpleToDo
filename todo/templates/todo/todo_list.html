@@ -1,0 +1,27 @@
+<!-- todo_list.html -->
+{% extends 'users/base.html' %}
+
+{% block title %}Todo List{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-6 offset-md-3">
+    <h2 class="mb-4">Todo List</h2>
+    <form method="POST">
+      <a href="{% url 'create_todo_list' %}" class="btn btn-primary">Add Task</a>
+
+    </form>
+    <hr>
+    <ul class="list-group">
+      {% for to in todo %}
+        <li class="list-group-item">
+          <a href="{% url 'todo_list_detail' pk=to.id %}" class="btn btn-primary">{{ to.title }}</a>
+          <button class="btn btn-danger btn-sm float-end">Delete</button>
+        </li>
+      {% empty %}
+        <li class="list-group-item">No tasks found.</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+{% endblock %}

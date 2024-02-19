@@ -1,12 +1,13 @@
-from .forms import UserRegisterForm, UpdateProfileForm
-from django.views import View
-from django.views.generic import FormView
-from django.views.generic.edit import UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
-from django.contrib.auth.models import User
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views import View
+from django.views.generic import FormView
+from django.views.generic.edit import UpdateView
+
+from .forms import UpdateProfileForm, UserRegisterForm
 
 
 def index_redirect(request):
