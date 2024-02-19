@@ -1,0 +1,17 @@
+<!-- todo_list_update.html -->
+{% extends 'users/base.html' %}
+
+{% block title %}Update Todo List{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-6 offset-md-3">
+    <h2 class="mb-4">Update Todo List</h2>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

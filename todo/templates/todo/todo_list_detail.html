@@ -1,3 +1,4 @@
+<!-- todo_list_detail.html -->
 {% extends 'users/base.html' %}
 
 {% block title %}Todo List Detail{% endblock %}
@@ -11,7 +12,12 @@
     <ul class="list-group">
       {% for todo_item in todo_list.todoitem_set.all %}
         <li class="list-group-item">
-          <h5>{{ todo_item.title }}</h5>
+          <div class="d-flex justify-content-between align-items-center">
+            <h5>{{ todo_item.title }}</h5>
+            <div>
+              <a href="{% url 'update_todo_item' pk=todo_item.pk %}" class="btn btn-secondary btn-sm">Update</a>
+            </div>
+          </div>
           <p>{{ todo_item.description }}</p>
           <p>Priority: {{ todo_item.priority }}</p>
           <p>Status: {{ todo_item.status }}</p>

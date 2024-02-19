@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404, render
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, DetailView, ListView
+from django.views.generic import CreateView, DetailView, ListView, DeleteView, UpdateView
 
 from .models import ToDoItem, ToDoList
 
@@ -33,6 +33,12 @@ class ToDoListDetailView(DetailView):
     context_object_name = 'todo_list'
 
 
+class ToDoListDeleteView(DeleteView):
+    model = ToDoList
+    template_name = 'todo/todo_list_delete.html'
+    success_url = reverse_lazy('todo_list')
+
+
 class CreateToDoItemView(CreateView):
     model = ToDoItem
     template_name = 'todo/create_todo_item.html'
@@ -44,3 +50,10 @@ class CreateToDoItemView(CreateView):
         todo_list = get_object_or_404(ToDoList, pk=todo_list_id)
         form.instance.todo_list = todo_list
         return super().form_valid(form)
+
+
+class ToDoItemUpdateView(UpdateView):
+    model = ToDoItem
+    fields = ['title', 'description', 'priority', 'due_date', 'status']
+    template_name = 'todo/todo_item_update.html'
+    success_url = reverse_lazy('todo_list')

@@ -1,0 +1,18 @@
+<!-- todo_list_delete.html -->
+{% extends 'users/base.html' %}
+
+{% block title %}Confirm Delete{% endblock %}
+
+{% block content %}
+<div class="row">
+  <div class="col-md-6 offset-md-3">
+    <h2 class="mb-4">Confirm Deletion</h2>
+    <p>Are you sure you want to delete "{{ todo_list.title }}"?</p>
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Confirm Delete</button>
+      <a href="{% url 'todo_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+  </div>
+</div>
+{% endblock %}

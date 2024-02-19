@@ -32,4 +32,4 @@ class ToDoItem(models.Model):
     todo_list = models.ForeignKey(ToDoList, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.title
+        return f"{self.pk} > {self.title}"
