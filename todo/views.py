@@ -85,7 +85,7 @@ class AddUserToToDoListView(View):
             try:
                 todo_list = ToDoList.objects.get(pk=todo_list_id)
             except ToDoList.DoesNotExist:
-                return HttpResponseBadRequest('Todo netu))')
+                return HttpResponseBadRequest('Todo DoesNotExist))')
 
             user = User.objects.filter(Q(username=username_or_email) | Q(email=username_or_email)).first()
             if user:
