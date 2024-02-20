@@ -17,9 +17,10 @@ STATUS_CHOICES = (
 class ToDoList(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=128, unique=True)
+    shared_with = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='shared_with')
 
     def __str__(self):
-        return self.title
+        return f"{self.pk} > {self.title}"
 
 
 class ToDoItem(models.Model):

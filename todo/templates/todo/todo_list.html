@@ -13,14 +13,15 @@
     </form>
     <hr>
     <ul class="list-group">
-      {% for to in todo %}
+      {% for todo in todo_list %}
         <li class="list-group-item">
-          <a href="{% url 'todo_list_detail' pk=to.id %}" class="btn btn-primary">{{ to.title }}</a>
-          <a href="{% url 'todo_list_delete' pk=to.id %}" class="btn btn-danger">Delete</a>
+          <a href="{% url 'todo_list_detail' pk=todo.id %}" class="btn btn-primary">{{ todo.title }}</a>
+          <a href="{% url 'delete_todo_list' pk=todo.id %}" class="btn btn-danger">Delete</a>
         </li>
       {% empty %}
         <li class="list-group-item">No tasks found.</li>
       {% endfor %}
+
     </ul>
   </div>
 </div>
