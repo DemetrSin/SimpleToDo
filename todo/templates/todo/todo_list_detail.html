@@ -8,6 +8,7 @@
   <div class="col-md-6 offset-md-3">
     <h2 class="mb-4">{{ todo_list.title }}</h2>
     <a href="{% url 'create_todo_item' todo_list_id=todo_list.id %}" class="btn btn-primary">Add Task</a>
+    <a href="{% url 'add_user' todo_list_id=todo_list.pk %}" class="btn btn-primary">Add User</a>
     <hr>
     <ul class="list-group">
       {% for todo_item in todo_list.todoitem_set.all %}
@@ -16,6 +17,7 @@
             <h5>{{ todo_item.title }}</h5>
             <div>
               <a href="{% url 'update_todo_item' pk=todo_item.pk %}" class="btn btn-secondary btn-sm">Update</a>
+              <a href="{% url 'delete_todo_item' pk=todo_item.pk %}" class="btn btn-danger">Delete</a>
             </div>
           </div>
           <p>{{ todo_item.description }}</p>

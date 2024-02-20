@@ -1,17 +1,22 @@
-from django.shortcuts import get_object_or_404, render
+from django.db.models import Q
+from django.http import HttpResponseBadRequest
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse, reverse_lazy
+from django.views import View
 from django.views.generic import CreateView, DetailView, ListView, DeleteView, UpdateView
+from django.contrib.auth.models import User
 
 from .models import ToDoItem, ToDoList
+from .forms import AddUserForm
 
 
 class ToDoListView(ListView):
     model = ToDoList
     template_name = 'todo/todo_list.html'
-    context_object_name = 'todo'
+    context_object_name = 'todo_list'
 
     def get_queryset(self):
-        return ToDoList.objects.filter(user=self.request.user)
+        return ToDoList.objects.filter(Q(user=self.request.user) | Q(shared_with=self.request.user))
 
 
 class CreateToDoListView(CreateView):
@@ -35,7 +40,7 @@ class ToDoListDetailView(DetailView):
 
 class ToDoListDeleteView(DeleteView):
     model = ToDoList
-    template_name = 'todo/todo_list_delete.html'
+    template_name = 'todo/delete_todo_list.html'
     success_url = reverse_lazy('todo_list')
 
 
@@ -55,5 +60,37 @@ class CreateToDoItemView(CreateView):
 class ToDoItemUpdateView(UpdateView):
     model = ToDoItem
     fields = ['title', 'description', 'priority', 'due_date', 'status']
-    template_name = 'todo/todo_item_update.html'
+    template_name = 'todo/update_todo_item.html'
     success_url = reverse_lazy('todo_list')
+
+
+class ToDoItemDeleteView(DeleteView):
+    model = ToDoItem
+    template_name = 'todo/delete_todo_list.html'
+    success_url = reverse_lazy('todo_list')
+
+
+class AddUserToToDoListView(View):
+    template_name = 'todo/add_user.html'
+
+    def get(self, request, *args, **kwargs):
+        form = AddUserForm()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = AddUserForm(request.POST)
+        if form.is_valid():
+            username_or_email = form.cleaned_data['username_or_email']
+            todo_list_id = self.kwargs['todo_list_id']
+            try:
+                todo_list = ToDoList.objects.get(pk=todo_list_id)
+            except ToDoList.DoesNotExist:
+                return HttpResponseBadRequest('Todo DoesNotExist))')
+
+            user = User.objects.filter(Q(username=username_or_email) | Q(email=username_or_email)).first()
+            if user:
+                todo_list.shared_with.add(user)
+                return redirect(reverse('todo_list'))
+            else:
+                form.add_error('username_or_email', "user doesn't exist")
+        return render(request, self.template_name, {'form': form})
