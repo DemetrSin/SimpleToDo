@@ -57,3 +57,10 @@ class ToDoItemUpdateView(UpdateView):
     fields = ['title', 'description', 'priority', 'due_date', 'status']
     template_name = 'todo/todo_item_update.html'
     success_url = reverse_lazy('todo_list')
+
+
+class ToDoItemDeleteView(DeleteView):
+    model = ToDoItem
+    template_name = 'todo/todo_list_delete.html'
+    success_url = reverse_lazy('todo_list')
+

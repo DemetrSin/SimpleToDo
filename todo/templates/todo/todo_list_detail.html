@@ -16,6 +16,7 @@
             <h5>{{ todo_item.title }}</h5>
             <div>
               <a href="{% url 'update_todo_item' pk=todo_item.pk %}" class="btn btn-secondary btn-sm">Update</a>
+              <a href="{% url 'delete_todo_item' pk=todo_item.pk %}" class="btn btn-danger">Delete</a>
             </div>
           </div>
           <p>{{ todo_item.description }}</p>
